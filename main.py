@@ -1,3 +1,5 @@
+import random
+
 #constant to define max number of slot lines
 MAX_LINES = 3
 MAX_BET = 100
@@ -28,7 +30,7 @@ def get_number_of_lines():
         #check for valid whole number and convert string to int
         if lines.isdigit():
             lines = int(lines)
-            #exit loop and return lines if greater than 0
+            #exit loop and return lines if between 1 and 3
             if 1 <= lines <= MAX_LINES:
                 break
             else:
@@ -44,8 +46,8 @@ def get_bet():
         #check for valid whole number and convert string to int
         if bet.isdigit():
             bet = int(bet)
-            #exit loop and return amount if greater than 0
-            if MIN_BET >= bet <= MAX_BET:
+            #exit loop and return bet if between $2 and $100
+            if MIN_BET <= bet <= MAX_BET:
                 break
             else:
                 print(f"Amount must be between ${MIN_BET} - ${MAX_BET}.")
@@ -57,8 +59,17 @@ def get_bet():
 def main():
     balance = deposit()
     lines = get_number_of_lines()
-    bet = get_bet()
+    #check if total bet is less than or equal to balance
+    while True:
+        bet = get_bet()
+        total_bet = bet * lines
 
-    print(balance, lines, bet)
+        if total_bet > balance:
+            print(f"You do not have enough to bet that amount. Your balance is ${balance}.")
+        else:
+            break
+
+    print(f"You are betting ${bet} on {lines} lines. Total bet is: ${total_bet}.")
+    
 
 main()
